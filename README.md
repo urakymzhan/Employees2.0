@@ -1,9 +1,8 @@
-# Employees2.0
+## Employees2.0
 > Project with Seytech students
 
 
-## start backend and front end to run
+### start backend and front end
 - npm install
 - npm start
-
-## For database replace your mongoose atlas url
+- for database replace your mongoose atlas string
