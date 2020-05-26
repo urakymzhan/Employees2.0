@@ -70,9 +70,7 @@ app.put('/api/employee/:id', (req, res) => {
 })
 
 app.delete('/api/employee/:id', (req, res) => {
-    console.log("params", req.params)
     const id = req.params.id;
-    console.log('id-------', id)
     Employees.deleteEmployee(id, (err, employee) => {
         if (err) {
             throw err;

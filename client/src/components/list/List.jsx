@@ -13,7 +13,7 @@ class List extends Component {
       limit: 10,
       page,
       editMode: false,
-      employee: {},
+      employee: {}
     };
   }
   next = () => {
@@ -43,7 +43,7 @@ class List extends Component {
   render() {
     const { employees, sortBy, sortByFn, toggleOrder } = this.props;
     const { limit, page, editMode, employee } = this.state;
-    //counting total pages & pushing to an array all total pages
+    //count total pages & push total pages
     const totalPages = Math.ceil(employees.length / limit);
     const pages = [];
     for (let i = 1; i <= totalPages; i++) {

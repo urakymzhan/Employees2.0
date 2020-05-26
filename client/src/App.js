@@ -3,9 +3,9 @@ import List from './components/list/List';
 import Search from './components/search/Search';
 import './App.css'
 import Sticky from './components/sticky/Sticky';
-import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
-import Single from './components/single/Single.jsx';
+import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
 import Employee from './components/employee/Employee.jsx';
+import AddEmployee from './components/addemployee/AddEmployee.jsx';
 
 const apiUrl = 'http://localhost:5000/'
 
@@ -104,7 +104,7 @@ class App extends Component {
 
   // delete
   delete = (e, _id) => {
-    e.preventDefault(); // ignoring link
+    e.preventDefault(); 
 
     fetch(`${apiUrl}api/employee/${_id}`, {
       method: 'DELETE',
@@ -127,10 +127,10 @@ class App extends Component {
     const loader = <div className="lds-dual-ring"></div>;
     // if loaded render List
     let content = isLoading ? loader : <List employees={sortedEmployees} delete={this.delete} sortByFn={this.sortByFn} sortBy={sortBy} toggleOrder={toggleOrder} onSave={this.onSave} />;
-    // if no data from API // need timing fro spinner to trigger this option
-    // if (!isLoading && !sortedEmployees.length) {
-    //   content = <div className="not-found">Data Not Found</div>
-    // }
+    // need timing for spinner to trigger this option
+    if (!isLoading && !sortedEmployees.length) {
+      content = <div className="not-found">Data Not Found</div>
+    }
 
     return (
       <React.Fragment>
@@ -139,13 +139,7 @@ class App extends Component {
           <Router>
             <Switch>
               <Route path='/' exact>
-                <Search
-                  value={search}
-                  getSearch={this.getSearch}
-                  getSearchBy={this.getSearchBy}
-                  searchBy={searchBy}
-                />
-                {content}
+                <Redirect to="/page/1"/>
               </Route>
               <Route path='/page/:page'>
                 <Search
@@ -157,10 +151,10 @@ class App extends Component {
                 {content}
               </Route>
               <Route path='/employee/:id'>
-                {!isLoading && sortedEmployees.length > 0 && <Single employees={sortedEmployees} />}
+                {!isLoading && sortedEmployees.length > 0 && <Employee employees={sortedEmployees} />}
               </Route>
               <Route path='/new-employee/'>
-                <Employee addEmployee={this.addEmployee} />
+                <AddEmployee addEmployee={this.addEmployee} />
               </Route>
             </Switch>
           </Router>
