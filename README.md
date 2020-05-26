@@ -6,3 +6,5 @@
 - npm install
 - npm start
 - for database replace your mongoose atlas string
+
+#### Code cleanup and minor modifications need to be done

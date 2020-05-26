@@ -56,6 +56,5 @@ module.exports.updateEmployee = (id, employee, options, callback) => {
 };
 // delete
 module.exports.deleteEmployee = (id, options, callback) => {
-  // const query = { _id: id };
   Employees.findByIdAndRemove(id, options, callback);
 };

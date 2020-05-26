@@ -5,22 +5,22 @@ import { shallow, mount } from 'enzyme';
 
 
 // App: h2
-describe('App', () => {
-    it('renders the App title', () => {
-        let app = shallow(<App />);
-        expect(app.find('h2').text()).toEqual('Employee Title')
-    })
-})
+// describe('App', () => {
+//     it('renders the App title', () => {
+//         let app = shallow(<App />);
+//         expect(app.find('h2').text()).toEqual('Employee Title')
+//     })
+// })
 
 // App: props
-const props = { texts: { title: "Employee Title"}};
+// const props = { texts: { title: "Employee Title"}};
 
-describe('App', () => {
-    it('renders the App title', () => {
-        let app = shallow(<App {...props}/>);
-        expect(app.find('h2').text()).toEqual(props.texts.title)
-    })
-})
+// describe('App', () => {
+//     it('renders the App title', () => {
+//         let app = shallow(<App {...props}/>);
+//         expect(app.find('h2').text()).toEqual(props.texts.title)
+//     })
+// })
 
 // App: option: first: props
 describe('App', () => {
@@ -49,12 +49,12 @@ describe('App', () => {
 })
 
 // App: Search: dive()
-describe('Search', () => {
-  it('button click should hide component', () => {
-    const app = shallow(<App />);
-    // console.log(app.find(Search).debug())
-     expect(app.find(Search).dive().find('.search')).toHaveLength(1);
+// describe('Search', () => {
+//   it('button click should hide component', () => {
+//     const app = shallow(<App />);
+//     // console.log(app.find(Search).debug())
+//      expect(app.find(Search).dive().find('.search')).toHaveLength(1);
 
-  });
-});
+//   });
+// });
 

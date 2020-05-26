@@ -1,240 +1,175 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
-import { Link } from "react-router-dom";
-import { Alert } from "reactstrap";
+import {
+  PieChart,
+  Pie,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+} from "recharts";
+import moment from "moment";
 import "./employee.css";
-import { validateForm } from "../../utils/validateForm";
-
-const validEmailRegex = RegExp(/(.+)@(.+){2,}\.(.+){2,}/);
+import { connect } from 'react-redux';
 
 class Employee extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      employee: {
-        // hardcoded data
-        id: 201,
-        first_name: "",
-        last_name: "",
-        email: "",
-        city: "",
-        state: "",
-        logins: [
-          {
-            date: "2019-03-09T05:31:04.652Z",
-          },
-          {
-            date: "2019-05-17T04:17:36.752Z",
-          },
-          {
-            date: "2019-07-06T04:27:46.203Z",
-          },
-          {
-            date: "2019-07-29T04:27:16.098Z",
-          },
-          {
-            date: "2019-08-06T04:25:47.448Z",
-          },
-          {
-            date: "2019-08-27T04:28:12.485Z",
-          },
-          {
-            date: "2019-11-16T05:53:11.416Z",
-          },
-          {
-            date: "2019-12-04T05:01:04.236Z",
-          },
-          {
-            date: "2019-12-24T05:12:19.047Z",
-          },
-          {
-            date: "2020-01-01T05:04:47.346Z",
-          },
-          {
-            date: "2020-01-05T05:54:04.368Z",
-          },
-          {
-            date: "2020-01-25T05:02:38.110Z",
-          },
-        ],
-      },
-      alert: false,
-      errors: {
-        first_name: "",
-        last_name: "",
-        email: "",
-        city: "",
-        state: "",
-      },
-    };
-  }
-  setChange = (e) => {
-    const { employee } = this.state;
-    let errors = this.state.errors;
-    const { name, value } = e.target;
-    employee[e.target.name] = e.target.value;
-
-    switch (name) {
-      case "first_name":
-        errors.first_name =
-          value.length < 3 ? "First name must be 3 characters long!" : "";
-        break;
-      case "last_name":
-        errors.last_name =
-          value.length < 3 ? "Last name must be 3 characters long!" : "";
-        break;
-      case "email":
-        errors.email = validEmailRegex.test(value) ? "" : "Email is not valid!";
-        break;
-      case "city":
-        errors.city = value.length < 3 ? "City must be 3 characters long!" : "";
-        break;
-      case "state":
-        errors.state =
-          value.length < 2 ? "State must be 2 characters long!" : "";
-        break;
-      default:
-        break;
-    }
-    this.setState({ errors, employee, alert: false });
-  };
-
   goBack = () => {
     this.props.history.goBack();
   };
-
-  addEmployee = (e) => {
-    const { employee, errors } = this.state;
-    const { addEmployee } = this.props;
-
-    if (validateForm(errors, employee)) {
-      addEmployee(employee);
-    } else {
-      e.preventDefault();
-      this.setState({ alert: true });
-    }
-  };
-
   render() {
-    const { alert, errors } = this.state;
-    let message = "Please fill out the form correctly";
+    const { id } = this.props.match.params;
+    const { employees } = this.props;
 
-    const checkValidation = alert ? (
-      <Alert color="danger">{message}</Alert>
-    ) : null;
+    let employee = {};
+    for (let i = 0; i < employees.length; i++) {
+      if (id === employees[i]._id) {
+        employee = employees[i];
+        break;
+      }
+    }
+
+    let months = {};
+    let days = {};
+    if (employee.logins !== undefined) {
+      employee.logins.forEach((login) => {
+        const { date } = login;
+        const month = moment(date).format("MMM");
+        const day = moment(date).format("dddd");
+        if (!months[month]) {
+          months[month] = 1;
+        } else {
+          months[month]++;
+        }
+        if (!days[day]) {
+          days[day] = 1;
+        } else {
+          days[day]++;
+        }
+      });
+    }
+
+    const data = Object.keys(days).map((day) => {
+      const count = days[day];
+      return { name: day, value: count };
+    });
+
+    const arr = Object.keys(months).map((month) => {
+      const count = months[month];
+      return { month, count };
+    });
+
+    const fullData = (
+      <>
+        <table className="table tsu">
+          <thead>
+            <tr>
+              <th scope="col">First Name</th>
+              <th scope="col">Last Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">City</th>
+              <th scope="col">State</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{employee.first_name}</td>
+              <td>{employee.last_name}</td>
+              <td>{employee.email}</td>
+              <td>{employee.city}</td>
+              <td>{employee.state}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div className="chart-container">
+          <div className="chart">
+            <h3>Graph by Days</h3>
+            <table className="table sm">
+              <tbody>
+                {Object.keys(days)
+                  .sort((a, b) => days[a] - days[b])
+                  .map((day, ind) => {
+                    const count = days[day];
+                    return (
+                      <tr key={ind}>
+                        <td>{day}</td>
+                        <td>{count}</td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
+          </div>
+          <div className="chart">
+            <PieChart width={500} height={650}>
+              <Pie
+                isAnimationActive={true}
+                data={data}
+                cx={200}
+                cy={150}
+                outerRadius={120}
+                fill="#82ca9d"
+                label
+                dataKey="value"
+              />
+              <Tooltip />
+            </PieChart>
+          </div>
+          <div className="chart-2">
+            <h3>Graph by Month</h3>
+            <table className="table sm">
+              <tbody>
+                {Object.keys(months)
+                  .sort((a, b) => days[a] - days[b])
+                  .map((month, ind) => {
+                    const count = months[month];
+                    return (
+                      <tr key={ind}>
+                        <td>{month}</td>
+                        <td>{count}</td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
+          </div>
+          <div className="chart-2">
+            <BarChart
+              width={400}
+              height={450}
+              data={arr}
+              margin={{ top: 0, right: 30, left: 20, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="count" fill="#8884d8" />
+            </BarChart>
+          </div>
+        </div>
+      </>
+    );
+    const error = <div className="err">This Employee Has Been Deleted</div>;
+    // ----------------
+    const content = employee.logins !== undefined ? fullData : error;
     return (
-      <React.Fragment>
+      <div className="single">
         <button
           onClick={this.goBack}
           type="button"
           className="btn btn-outline-dark"
         >{`Go Back`}</button>
-        <div className="employee">
-          <h4>Add New Employee</h4>
-          <form className="">
-            {checkValidation}
-            <div className="form-row mb-3">
-              {/* <div className="col-md-6"> */}
-              <input
-                type="text"
-                className="form-control"
-                placeholder="First name"
-                name="first_name"
-                onChange={this.setChange}
-                required
-                noValidate
-              />
-              {errors.first_name.length > 0 && (
-                <span className="error">{errors.first_name}</span>
-              )}
-              {/* </div> */}
-            </div>
-
-            <div className="form-row mb-3">
-              {/* <div className="col-md-6"> */}
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Last name"
-                name="last_name"
-                onChange={this.setChange}
-                required
-                noValidate
-              />
-              {errors.last_name.length > 0 && (
-                <span className="error">{errors.last_name}</span>
-              )}
-              {/* </div> */}
-            </div>
-
-            <div className="form-row mb-3">
-              {/* <div className="col-md-6"> */}
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Email"
-                name="email"
-                onChange={this.setChange}
-                required
-                noValidate
-              />
-              {errors.email.length > 0 && (
-                <span className="error">{errors.email}</span>
-              )}
-              {/* </div> */}
-            </div>
-
-            <div className="form-row mb-3">
-              {/* <div className="col-md-6"> */}
-              <input
-                type="text"
-                className="form-control"
-                placeholder="City"
-                name="city"
-                onChange={this.setChange}
-                required
-                noValidate
-              />
-              {errors.city.length > 0 && (
-                <span className="error">{errors.city}</span>
-              )}
-              {/* </div> */}
-            </div>
-
-            <div className="form-row mb-3">
-              {/* <div className="col-md-6"> */}
-              <input
-                type="text"
-                className="form-control"
-                placeholder="State"
-                name="state"
-                onChange={this.setChange}
-                required
-                noValidate
-              />
-              {errors.state.length > 0 && (
-                <span className="error">{errors.state}</span>
-              )}
-              {/* </div> */}
-            </div>
-          </form>
-
-          <div className="form-row mb-3">
-            <div className="col">
-              <Link
-                to="/"
-                type="button"
-                className="btn add  btn-dark"
-                onClick={(e) => this.addEmployee(e)}
-              >
-                Add
-              </Link>
-            </div>
-          </div>
-        </div>
-      </React.Fragment>
+        {content}
+      </div>
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    employees: state.app.employees
+  }
+}
 
-export default withRouter(Employee);
+export default connect(mapStateToProps)(withRouter(Employee));

@@ -10,7 +10,9 @@ import {
   Col,
   Input,
 } from "reactstrap";
-
+import { connect } from 'react-redux';
+ import {  editEmployee } from '../../actions/app';
+ 
 class Edit extends Component {
   constructor(props) {
     super(props);
@@ -35,11 +37,12 @@ class Edit extends Component {
   // send to App to update 
   onSave = () => {
     const { employee } = this.state;
-    this.props.onSave(employee);
+    this.props.editEmployee(employee);
     this.props.onClose();
   };
 
   render() {
+
     const { first_name, last_name, email, city, state } = this.state.employee;
     return (
       <div>
@@ -118,4 +121,4 @@ class Edit extends Component {
   }
 }
 
-export default Edit;
+export default connect(null, {editEmployee})(Edit);

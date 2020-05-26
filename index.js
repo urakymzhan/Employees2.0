@@ -7,7 +7,7 @@ Employees = require('./models/employees');
 
 const uri = "mongodb+srv://seytech:Seytech2020@seytech-byvi5.mongodb.net/Seytech?retryWrites=true&w=majority"
 
-// Connext to Mongoose
+// mongoose setup
 mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -16,18 +16,19 @@ mongoose.connect(uri, {
     console.log("MongoDB Connected ...")
   })
   .catch(err => console.log(err))
-  
 mongoose.set('useFindAndModify', false);
+// db connect
 const db = mongoose.connection;
 
+// app setup
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// route setup
 app.get('/', (req, res) => {
     res.send('Employees API is running');
 });
-
 app.get('/api/employees', (req, res) => { 
 
     Employees.find({}, function(err, data) {
@@ -61,7 +62,8 @@ app.post('/api/employees', (req, res) => {
 app.put('/api/employee/:id', (req, res) => {
     const id = req.params.id;
     const employee = req.body;
-    Employees.updateEmployee(id, employee, {}, (err, employee) => {
+     // by default findOneAndUpdate returns original document. { new: true } returns updated one.
+    Employees.updateEmployee(id, employee, {new: true}, (err, employee) => {
         if (err) {
             throw err;
         }
