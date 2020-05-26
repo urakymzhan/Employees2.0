@@ -127,9 +127,9 @@ class App extends Component {
     const loader = <div className="lds-dual-ring"></div>;
     // if loaded render List
     let content = isLoading ? loader : <List employees={sortedEmployees} delete={this.delete} sortByFn={this.sortByFn} sortBy={sortBy} toggleOrder={toggleOrder} onSave={this.onSave} />;
-    // need timing for spinner to trigger this option
+    // no search found
     if (!isLoading && !sortedEmployees.length) {
-      content = <div className="not-found">Data Not Found</div>
+      content = <div className="not-found">Employee Not Found</div>
     }
 
     return (
