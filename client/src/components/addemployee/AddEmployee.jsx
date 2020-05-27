@@ -4,11 +4,8 @@ import { Link } from "react-router-dom";
 import { Alert } from "reactstrap";
 import "./addemployee.css";
 import { validateForm } from "../../utils/validateForm";
-<<<<<<< HEAD
-=======
 import { connect } from 'react-redux';
 import { addEmployee } from '../../actions';
->>>>>>> with-redux
 
 const validEmailRegex = RegExp(/(.+)@(.+){2,}\.(.+){2,}/);
 
@@ -17,11 +14,7 @@ class AddEmployee extends Component {
     super(props);
     this.state = {
       employee: {
-<<<<<<< HEAD
-        // hardcoded 
-=======
         // hardcoded data
->>>>>>> with-redux
         id: 201,
         first_name: "",
         last_name: "",
@@ -128,10 +121,7 @@ class AddEmployee extends Component {
     const { alert, errors } = this.state;
     let message = "Please fill out the form correctly";
 
-<<<<<<< HEAD
-=======
     console.log("employee page prop", this.props)
->>>>>>> with-redux
     const checkValidation = alert ? (
       <Alert color="danger">{message}</Alert>
     ) : null;
@@ -240,9 +230,6 @@ class AddEmployee extends Component {
   }
 }
 
-<<<<<<< HEAD
-export default withRouter(AddEmployee);
-=======
 // const mapStateToProps = state => {
 //   return {
 //     employees: state.app.employees
@@ -250,4 +237,3 @@ export default withRouter(AddEmployee);
 // }
 
 export default connect(null, { addEmployee })(withRouter(AddEmployee));
->>>>>>> with-redux

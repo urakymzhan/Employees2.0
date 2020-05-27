@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-
-const initialState = {
-    employees: [],
-    isLoading: false,
-}
-
-// reducer
-export default function(state=initialState, action ) {
-    const { type, payload } = action;
-
-    switch(type) {
-=======
 const initalState = {
     employees: [],
     isLoading: false,
@@ -26,19 +13,12 @@ export default function(state = initalState, { type, payload }) {
     console.log("payload", payload);
 
     switch (type) {
->>>>>>> with-redux
         case "LOAD_EMPLOYEES":
             return {
                 ...state,
                 employees: payload,
                 isLoading: false
             }
-<<<<<<< HEAD
-        case "LOAD_EMPLOYEES_FAILED":
-            return {
-                ...state,
-                isLoading: true
-=======
         case "EMPLOYEES_LOAD_FAILED":
             return {
                 ...state,
@@ -46,7 +26,6 @@ export default function(state = initalState, { type, payload }) {
                 isLoading: false,
                 // ideally show this message in Error Component if we have
                 errors: payload
->>>>>>> with-redux
             }
         case "ADD_EMPLOYEE":
             return {
@@ -57,9 +36,6 @@ export default function(state = initalState, { type, payload }) {
         case "ADD_EMPLOYEE_FAILED":
             return {
                 ...state,
-<<<<<<< HEAD
-                isLoading: false
-=======
                 isLoading: false,
                 errors: payload
             }
@@ -91,14 +67,8 @@ export default function(state = initalState, { type, payload }) {
                 ...state,
                 isLoading: false,
                 errors: payload
->>>>>>> with-redux
             }
         default:
             return state;
     }
-<<<<<<< HEAD
-
 }
-=======
-}
->>>>>>> with-redux
