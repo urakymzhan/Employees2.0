@@ -38,9 +38,9 @@ const employeeSchema = mongoose.Schema({
 module.exports = mongoose.model('Employees', employeeSchema);
 
 // get all employees
-// module.exports.getEmployees = (callback, limit) => {
-//   Employees.find(callback).limit(limit);
-// };
+module.exports.getEmployees = (callback, limit) => {
+  Employees.find(callback).limit(limit);
+};
 // get one employee
 module.exports.getEmployeeById = (employeeId, callback) => {
   Employees.findById(employeeId, callback);

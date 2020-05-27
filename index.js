@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 Employees = require('./models/employees');
 
-// replace with your url
+// REPLACE WITH YOUR URI STRING !!! 
 const uri = "mongodb+srv://<username>:<password>@test-byvi5.mongodb.net/test?retryWrites=true&w=majority"
 
 // mongoose setup
@@ -31,8 +31,7 @@ app.get('/', (req, res) => {
     res.send('Employees API is running');
 });
 app.get('/api/employees', (req, res) => { 
-
-    Employees.find({}, function(err, data) {
+    Employees.getEmployees((err, data) => {
         if (err) {
             throw err;
         }
@@ -82,5 +81,5 @@ app.delete('/api/employee/:id', (req, res) => {
     })
 })
 
-app.listen(5000, console.log('Running on port 5000...'));
+app.listen(5000, console.log('I am your node running on port 5000...'));
 
