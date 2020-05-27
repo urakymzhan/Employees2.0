@@ -12,8 +12,9 @@ import {
 } from "recharts";
 import moment from "moment";
 import "./employee.css";
+import { connect } from 'react-redux';
 
-class Single extends Component {
+class Employee extends Component {
   goBack = () => {
     this.props.history.goBack();
   };
@@ -165,5 +166,10 @@ class Single extends Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    employees: state.app.employees
+  }
+}
 
-export default withRouter(Single);
+export default connect(mapStateToProps)(withRouter(Employee));

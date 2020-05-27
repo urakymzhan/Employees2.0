@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // action creators
 
 const baseUrl = 'http://localhost:5000/'
@@ -45,3 +46,16 @@ export const addEmployee = (employee) => dispatch => {
 
 
 
+=======
+
+import { getData, addEmployee, editEmployee, deleteEmployee } from './app';
+// import { } from './employee';
+
+export {
+    getData,
+    addEmployee,
+    editEmployee,
+    deleteEmployee
+}
+
+>>>>>>> with-redux

@@ -3,7 +3,8 @@ import { withRouter } from "react-router";
 import "./list.css";
 import { Link } from "react-router-dom";
 import Edit from "../edit/Edit.jsx";
-
+import { connect } from 'react-redux';
+import { deleteEmployee, editEmployee } from '../../actions';
 class List extends Component {
   constructor(props) {
     super(props);
@@ -41,7 +42,10 @@ class List extends Component {
     this.setState({ editMode: !this.state.editMode, employee });
   };
   render() {
-    const { employees, sortBy, sortByFn, toggleOrder } = this.props;
+
+    console.log("redux props from list.jsx", this.props);
+    const { employees } = this.props; // from redux
+    const { sortBy, sortByFn, toggleOrder } = this.props;
     const { limit, page, editMode, employee } = this.state;
     //count total pages & push total pages
     const totalPages = Math.ceil(employees.length / limit);
@@ -59,7 +63,6 @@ class List extends Component {
         <Edit
           editMode={editMode}
           employee={employee}
-          onSave={this.props.onSave}
           onClose={this.onClose}
         />
         <div className="row header">
@@ -154,7 +157,7 @@ class List extends Component {
                   <div
                     className="trash"
                     onClick={(e) => {
-                      this.props.delete(e, _id);
+                      this.props.deleteEmployee(e, _id);
                     }}
                   >
                     Delete
@@ -195,5 +198,9 @@ class List extends Component {
     );
   }
 }
-
-export default withRouter(List);
+const mapStateToProps = state => {
+  return {
+    employees: state.app.employees
+  }
+}
+export default connect(mapStateToProps, { deleteEmployee, editEmployee })(withRouter(List));

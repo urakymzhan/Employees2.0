@@ -7,4 +7,4 @@
 - npm start
 - for database replace your mongoose atlas string
 
-#### !still needs more work
+#### Code cleanup and minor modifications need to be done

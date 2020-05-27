@@ -6,6 +6,11 @@ import Sticky from './components/sticky/Sticky';
 import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
 import Employee from './components/employee/Employee.jsx';
 import AddEmployee from './components/addemployee/AddEmployee.jsx';
+<<<<<<< HEAD
+=======
+import { getData, addEmployee, editEmployee, deleteEmployee } from './actions';
+import { connect } from 'react-redux';
+>>>>>>> with-redux
 
 const apiUrl = 'http://localhost:5000/'
 
@@ -13,27 +18,18 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      employees: [],
-      isLoading: false,
       search: '',
       searchBy: '',
       sortBy: '',
       toggleOrder: false
     }
   }
-  getData = () => {
-    this.setState({ isLoading: true })
-    fetch(`${apiUrl}api/employees`)
-      .then(response => response.json())
-      .then(employees => this.setState({ employees, isLoading: false }))
-  }
   componentDidMount() {
-    this.getData();
+    this.props.getData();
   }
 
   getSearch = e => this.setState({ search: e.target.value });
 
-  getSearch = e => this.setState({ search: e.target.value });
   getSearchBy = e => this.setState({ searchBy: e.target.value });
 
   sortByFn = (value) => {
@@ -58,7 +54,9 @@ class App extends Component {
   }
 
   filter = () => {
-    const { employees, search, searchBy } = this.state;
+    const { search, searchBy } = this.state;
+    const { employees } = this.props;
+
     return employees.filter(employee => {
       if (searchBy === '') {
         return employee["first_name"] && employee["first_name"].toLowerCase().includes(search.toLowerCase())
@@ -69,40 +67,19 @@ class App extends Component {
   }
 
   // add
-  addEmployee = employee => {
-    fetch(`${apiUrl}api/employees`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(employee)
-    })
-      .then(res => res.json())
-      .then(response => {
-        const { employees } = this.state;
-        employees.unshift(response);
-        this.setState({ employees })
-      })
-
-  }
+  // we don't need this anymore
+  // addEmployee = employee => {
+  //   this.props.addEmployee(employee);
+  // }
 
   // edit
-  onSave = employee => {
-    fetch(`${apiUrl}api/employee/${employee._id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(employee)
-    })
-      .then(response => {
-        const employees = this.state.employees.map(el => {
-          if (el.id === employee.id) {
-            return employee
-          }
-          return el
-        });
-        this.setState({ employees });
-      })
-  }
+  // we don't need this anymore
+  // onSave = employee => {
+  //   this.props.editEmployee(employee);
+  // }
 
   // delete
+<<<<<<< HEAD
   delete = (e, _id) => {
     e.preventDefault(); 
 
@@ -116,20 +93,40 @@ class App extends Component {
 
       })
   }
+=======
+  // we don't need this anymore
+  // delete = (e, _id) => {
+  //   e.preventDefault();
+  //   this.props.deleteEmployee(e, _id);
+  // }
+>>>>>>> with-redux
 
   render() {
-    const { isLoading, sortBy, search, searchBy, toggleOrder } = this.state;
+    const { sortBy, search, searchBy, toggleOrder } = this.state;
+    let { isLoading, employees } = this.props;
+
     // filter
-    const filteredEmployees = this.filter();
+    employees = this.filter();
+
     // sort
-    let sortedEmployees = this.handleSortvalue(filteredEmployees);
+    employees = this.handleSortvalue(employees);
+
+    console.log("filteredEm", employees )
     // spinner
     const loader = <div className="lds-dual-ring"></div>;
     // if loaded render List
+<<<<<<< HEAD
     let content = isLoading ? loader : <List employees={sortedEmployees} delete={this.delete} sortByFn={this.sortByFn} sortBy={sortBy} toggleOrder={toggleOrder} onSave={this.onSave} />;
     // no search found
     if (!isLoading && !sortedEmployees.length) {
       content = <div className="not-found">Employee Not Found</div>
+=======
+    // get rid employees after setting sorting and filtering on redux
+    let content = isLoading ? loader : <List employees={employees} sortByFn={this.sortByFn} sortBy={sortBy} toggleOrder={toggleOrder} />;
+    // if employees undefined
+    if (!isLoading && !employees.length) {
+      content = <div className="not-found">Data Not Found</div>
+>>>>>>> with-redux
     }
 
     return (
@@ -139,7 +136,11 @@ class App extends Component {
           <Router>
             <Switch>
               <Route path='/' exact>
+<<<<<<< HEAD
                 <Redirect to="/page/1"/>
+=======
+                <Redirect to="/page/1" /> 
+>>>>>>> with-redux
               </Route>
               <Route path='/page/:page'>
                 <Search
@@ -151,10 +152,17 @@ class App extends Component {
                 {content}
               </Route>
               <Route path='/employee/:id'>
+<<<<<<< HEAD
                 {!isLoading && sortedEmployees.length > 0 && <Employee employees={sortedEmployees} />}
               </Route>
               <Route path='/new-employee/'>
                 <AddEmployee addEmployee={this.addEmployee} />
+=======
+                {!isLoading && employees.length > 0 && <Employee />}
+              </Route>
+              <Route path='/new-employee/'>
+                <AddEmployee /> 
+>>>>>>> with-redux
               </Route>
             </Switch>
           </Router>
@@ -164,4 +172,10 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    employees: state.app.employees,
+    isLoading: state.app.isLoading
+  }
+}
+export default connect(mapStateToProps, { getData, addEmployee, editEmployee, deleteEmployee })(App);

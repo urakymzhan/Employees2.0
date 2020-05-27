@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
-import  app  from './app';
+import app from './app'
+// import employee from './employee'
 
-const allReducers = combineReducers({
+ const rootReducer = combineReducers({
     app
-});
+})
 
-export default allReducers
+export default rootReducer;
