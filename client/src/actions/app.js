@@ -1,11 +1,11 @@
-// action creator
+// Action creators
 
-const apiUrl = 'http://localhost:5000/'
+const baseUrl = 'http://localhost:5000/'
 
 // get all employees
 export const getData = () => dispatch => {
 
-    fetch(`${apiUrl}api/employees`)
+    fetch(`${baseUrl}api/employees`)
         .then(response => response.json())
         .then(employees => {
              dispatch({
@@ -26,7 +26,7 @@ export const addEmployee = (employee) => dispatch => {
 
     console.log("employee", employee);
 
-    fetch(`${apiUrl}api/employees`, {
+    fetch(`${baseUrl}api/employees`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(employee)
@@ -45,10 +45,11 @@ export const addEmployee = (employee) => dispatch => {
             })
     })
 }
+
 // edit employee
 export const editEmployee = (employee) => dispatch => {
 
-    fetch(`${apiUrl}api/employee/${employee._id}`, {
+    fetch(`${baseUrl}api/employee/${employee._id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(employee)
@@ -71,7 +72,7 @@ export const editEmployee = (employee) => dispatch => {
 export const deleteEmployee = (e, _id) => dispatch => {
     e.preventDefault();
 
-    fetch(`${apiUrl}api/employee/${_id}`, {
+    fetch(`${baseUrl}api/employee/${_id}`, {
         method: 'DELETE',
       })
         .then(res => res.json())
@@ -88,3 +89,28 @@ export const deleteEmployee = (e, _id) => dispatch => {
             })
     })
 }
+
+
+// ----------- 
+// TODO: dispatch needed
+// don't think we will have errors but good to handle it for any case
+export const setSortBy = (value) => dispatch => {
+    dispatch({
+        type: "SET_SORTBY",
+        payload: value
+    })
+}
+
+export const getSearchValue = (e) => dispatch => {
+    dispatch({
+        type: "GET_SEARCH_VALUE",
+        payload: e.target.value
+    })
+}
+export const getSearchBy = (e) => dispatch => {
+    dispatch({
+        type: "GET_SEARCH_BY",
+        payload: e.target.value
+    })
+}
+

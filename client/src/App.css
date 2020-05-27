@@ -1,6 +1,5 @@
 body {
   background-color: #fff;
-  /* padding: 50px 0 0 0; */
 }
 * {
   box-sizing: border-box;
@@ -10,22 +9,22 @@ a:hover {
   color: #000;
 }
 a {
-  color: #000;
+  color: inherit;
 }
-
-.not-found{
-    width: 295px;
-    border: 1px solid pink;
-    color: red;
-    margin: 100px auto;
-    padding: 40px 45px;
-    font-size: 30px;
+.not-found {
+    width: 20%;
+    color: rgb(219, 7, 7);
+    margin: 50px auto;
+    font-size: 25px;
+    border: none;
 }
 
 .lds-dual-ring {
   display: inline-block;
   width: 80px;
   height: 80px;
+  margin: 50px;
+  margin-left: 45%;
 }
 .lds-dual-ring:after {
   content: " ";
@@ -45,10 +44,4 @@ a {
   100% {
     transform: rotate(360deg);
   }
-}
-
-.not-found {
-  border: solid 1px pink;
-  color: red;
-  padding: 30px;
 }
