@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-// create a schema for employee
+// schema for employee
 const employeeSchema = mongoose.Schema({
   id: {
     type: Number,
@@ -38,9 +38,9 @@ const employeeSchema = mongoose.Schema({
 module.exports = mongoose.model('Employees', employeeSchema);
 
 // get all employees
-// module.exports.getEmployees = (callback, limit) => {
-//   Employees.find(callback).limit(limit);
-// };
+module.exports.getEmployees = (callback, limit) => {
+  Employees.find(callback).limit(limit);
+};
 // get one employee
 module.exports.getEmployeeById = (employeeId, callback) => {
   Employees.findById(employeeId, callback);
@@ -54,7 +54,7 @@ module.exports.updateEmployee = (id, employee, options, callback) => {
   const query = { _id: id };
   Employees.findOneAndUpdate(query, employee, options, callback);
 };
-// delete
+// delete employee
 module.exports.deleteEmployee = (id, options, callback) => {
   Employees.findByIdAndRemove(id, options, callback);
 };

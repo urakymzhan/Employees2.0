@@ -29,9 +29,9 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => {
     res.send('Employees API is running');
 });
-app.get('/api/employees', (req, res) => { 
 
-    Employees.find({}, function(err, data) {
+app.get('/api/employees', (req, res) => { 
+    Employees.getEmployees((err, data) => {
         if (err) {
             throw err;
         }
