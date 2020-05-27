@@ -6,11 +6,8 @@ import Sticky from './components/sticky/Sticky';
 import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
 import Employee from './components/employee/Employee.jsx';
 import AddEmployee from './components/addemployee/AddEmployee.jsx';
-<<<<<<< HEAD
-=======
 import { getData, addEmployee, editEmployee, deleteEmployee } from './actions';
 import { connect } from 'react-redux';
->>>>>>> with-redux
 
 const apiUrl = 'http://localhost:5000/'
 
@@ -79,27 +76,11 @@ class App extends Component {
   // }
 
   // delete
-<<<<<<< HEAD
-  delete = (e, _id) => {
-    e.preventDefault(); 
-
-    fetch(`${apiUrl}api/employee/${_id}`, {
-      method: 'DELETE',
-    })
-      .then(response => {
-        const { employees } = this.state;
-        let allEmployees = employees.filter(el => el._id !== _id)
-        this.setState({ employees: allEmployees });
-
-      })
-  }
-=======
   // we don't need this anymore
   // delete = (e, _id) => {
   //   e.preventDefault();
   //   this.props.deleteEmployee(e, _id);
   // }
->>>>>>> with-redux
 
   render() {
     const { sortBy, search, searchBy, toggleOrder } = this.state;
@@ -115,18 +96,11 @@ class App extends Component {
     // spinner
     const loader = <div className="lds-dual-ring"></div>;
     // if loaded render List
-<<<<<<< HEAD
-    let content = isLoading ? loader : <List employees={sortedEmployees} delete={this.delete} sortByFn={this.sortByFn} sortBy={sortBy} toggleOrder={toggleOrder} onSave={this.onSave} />;
-    // no search found
-    if (!isLoading && !sortedEmployees.length) {
-      content = <div className="not-found">Employee Not Found</div>
-=======
     // get rid employees after setting sorting and filtering on redux
     let content = isLoading ? loader : <List employees={employees} sortByFn={this.sortByFn} sortBy={sortBy} toggleOrder={toggleOrder} />;
     // if employees undefined
     if (!isLoading && !employees.length) {
       content = <div className="not-found">Data Not Found</div>
->>>>>>> with-redux
     }
 
     return (
@@ -136,11 +110,7 @@ class App extends Component {
           <Router>
             <Switch>
               <Route path='/' exact>
-<<<<<<< HEAD
-                <Redirect to="/page/1"/>
-=======
                 <Redirect to="/page/1" /> 
->>>>>>> with-redux
               </Route>
               <Route path='/page/:page'>
                 <Search
@@ -152,17 +122,10 @@ class App extends Component {
                 {content}
               </Route>
               <Route path='/employee/:id'>
-<<<<<<< HEAD
-                {!isLoading && sortedEmployees.length > 0 && <Employee employees={sortedEmployees} />}
-              </Route>
-              <Route path='/new-employee/'>
-                <AddEmployee addEmployee={this.addEmployee} />
-=======
                 {!isLoading && employees.length > 0 && <Employee />}
               </Route>
               <Route path='/new-employee/'>
                 <AddEmployee /> 
->>>>>>> with-redux
               </Route>
             </Switch>
           </Router>
