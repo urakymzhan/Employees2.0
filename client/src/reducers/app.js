@@ -1,16 +1,19 @@
+// TODO: use util functions to separate repeated code ex: function updateObject(oldObject, newValues) {}
+
 const initalState = {
     employees: [],
-    isLoading: false,
+    isLoading: true,
     errors: "",
 
     search: '',
     searchBy: '',
+
     sortBy: '',
     toggleOrder: false
 }
-export default function(state = initalState, { type, payload }) {
 
-    console.log("payload", payload);
+
+export function crudReducers(state = initalState, { type, payload }) {
 
     switch (type) {
         case "LOAD_EMPLOYEES":
@@ -23,7 +26,7 @@ export default function(state = initalState, { type, payload }) {
             return {
                 ...state,
                 // even tho it failed we should be able to see list of employees but just show an eror. not sure about this part
-                isLoading: false,
+                isLoading: true,
                 // ideally show this message in Error Component if we have
                 errors: payload
             }
@@ -67,6 +70,24 @@ export default function(state = initalState, { type, payload }) {
                 ...state,
                 isLoading: false,
                 errors: payload
+            }
+
+        // split these default reducers
+        case "SET_SORTBY":
+            return {
+                ...state,
+                sortBy: payload,
+                toggleOrder: !state.toggleOrder
+            }
+        case "GET_SEARCH_VALUE":
+            return {
+                ...state,
+                search: payload
+            }
+        case "GET_SEARCH_BY":
+            return {
+                ...state,
+                searchBy: payload
             }
         default:
             return state;

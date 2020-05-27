@@ -121,7 +121,6 @@ class AddEmployee extends Component {
     const { alert, errors } = this.state;
     let message = "Please fill out the form correctly";
 
-    console.log("employee page prop", this.props)
     const checkValidation = alert ? (
       <Alert color="danger">{message}</Alert>
     ) : null;

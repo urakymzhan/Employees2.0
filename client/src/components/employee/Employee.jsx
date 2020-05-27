@@ -168,7 +168,7 @@ class Employee extends Component {
 }
 const mapStateToProps = state => {
   return {
-    employees: state.app.employees
+    employees: state.crudReducers.employees
   }
 }
 

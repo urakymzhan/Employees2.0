@@ -9,9 +9,8 @@ a:hover {
   color: #000;
 }
 a {
-  color: #000;
+  color: inherit;
 }
-
 .not-found {
     width: 20%;
     color: rgb(219, 7, 7);
@@ -24,6 +23,8 @@ a {
   display: inline-block;
   width: 80px;
   height: 80px;
+  margin: 50px;
+  margin-left: 45%;
 }
 .lds-dual-ring:after {
   content: " ";
