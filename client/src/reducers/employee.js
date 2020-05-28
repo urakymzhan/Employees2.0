@@ -1,15 +1,23 @@
 
 const initialState = {
+    editMode: false,
     employee: {}
 }
 
-export default function(state=initialState, action) {
+export function modalReducers(state=initialState, action) {
     const { type, payload }  = action;
 
     switch(type) {
-        case "":
+        case "TOGGLE_MODAL":
             return {
-
+                ...state,
+                employee: payload,
+                editMode: !state.editMode
+            }
+        case "ON_CLOSE_MODAL":
+            return {
+                ...state,
+                editMode: !state.editMode
             }
         default:
             return state;

@@ -10,9 +10,9 @@ import {
   Col,
   Input,
 } from "reactstrap";
-import { connect } from 'react-redux';
- import {  editEmployee } from '../../actions/app';
- 
+import { connect } from "react-redux";
+import { editEmployee, onCloseModal } from "../../actions";
+
 class Edit extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +21,7 @@ class Edit extends Component {
     };
   }
 
+  // TODO: handle this better 
   componentWillReceiveProps(props) {
     if (props.employee) {
       const { employee } = props;
@@ -34,20 +35,21 @@ class Edit extends Component {
     this.setState({ employee });
   };
 
-  // send to App to update 
   onSave = () => {
     const { employee } = this.state;
     this.props.editEmployee(employee);
-    this.props.onClose();
+    this.props.onCloseModal()
   };
 
   render() {
 
     const { first_name, last_name, email, city, state } = this.state.employee;
+    const { editMode, onCloseModal } = this.props;
+
     return (
       <div>
-        <Modal isOpen={this.props.editMode} toggle={this.props.onClose}>
-          <ModalHeader toggle={this.props.onClose}>
+        <Modal isOpen={editMode} toggle={onCloseModal}>
+          <ModalHeader toggle={onCloseModal}>
             Edit{" "}
             <span style={{ color: "red" }}>
               {" "}
@@ -113,7 +115,7 @@ class Edit extends Component {
           </ModalBody>
           <div className="sc-btn">
             <Button onClick={this.onSave}>Save</Button>{" "}
-            <Button onClick={this.props.onClose}>Cancel</Button>
+            <Button onClick={onCloseModal}>Cancel</Button>
           </div>
         </Modal>
       </div>
@@ -121,4 +123,14 @@ class Edit extends Component {
   }
 }
 
-export default connect(null, {editEmployee})(Edit);
+const mapStateToProps = (state) => {
+  return {
+    editMode: state.modalReducers.editMode,
+    employee: state.modalReducers.employee,
+  };
+};
+
+export default connect(mapStateToProps, {
+  editEmployee,
+  onCloseModal,
+})(Edit);

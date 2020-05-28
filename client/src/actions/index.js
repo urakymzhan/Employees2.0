@@ -1,6 +1,6 @@
 
 import { getData, addEmployee, editEmployee, deleteEmployee, setSortBy, getSearchValue, getSearchBy } from './app';
-// import { } from './employee';
+import {toggleModal, onCloseModal } from './employee';
 
 export {
     getData,
@@ -9,6 +9,9 @@ export {
     deleteEmployee,
     setSortBy,
     getSearchValue,
-    getSearchBy
+    getSearchBy,
+
+    toggleModal,
+    onCloseModal
 }
 

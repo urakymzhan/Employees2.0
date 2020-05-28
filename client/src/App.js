@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import List from './components/list/List';
 import Search from './components/search/Search';
 import './App.css'
-import Sticky from './components/sticky/Sticky';
 import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
 import Employee from './components/employee/Employee.jsx';
 import AddEmployee from './components/addemployee/AddEmployee.jsx';
@@ -22,7 +21,9 @@ class App extends Component {
     let content = this.props.isLoading ? loader : <List />;
     return (
       <React.Fragment>
-        <Sticky />
+        <div className="sticky">
+            <div>Made by Seytech students. 2020</div>
+        </div>
         <div className='app'>
           <Router>
             <Switch>

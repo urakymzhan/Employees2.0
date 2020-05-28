@@ -1,15 +1,10 @@
-// import React from 'react';
 import { Link }  from 'react-router-dom';
 import './search.css';
 import React from 'react';
 import { connect } from 'react-redux';
 import { getSearchValue, getSearchBy } from '../../actions';
 
-const Search = (props) => {
-
-    console.log("props search",props )
-
-    const { search, getSearchValue, getSearchBy, searchBy } = props;
+const Search = ({ search, getSearchValue, getSearchBy, searchBy }) => {
 
     return (
         <div className="search-bar">
