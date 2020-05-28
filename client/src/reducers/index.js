@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
 import { crudReducers } from './app'
-// import employee from './employee'
+import {modalReducers } from './employee'
 
  const rootReducer = combineReducers({
-    crudReducers
+    crudReducers,
+    modalReducers
 })
 
 export default rootReducer;

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-// create a schema for employee
+// schema for employee
 const employeeSchema = mongoose.Schema({
   id: {
     type: Number,
@@ -54,7 +54,7 @@ module.exports.updateEmployee = (id, employee, options, callback) => {
   const query = { _id: id };
   Employees.findOneAndUpdate(query, employee, options, callback);
 };
-// delete
+// delete employee
 module.exports.deleteEmployee = (id, options, callback) => {
   Employees.findByIdAndRemove(id, options, callback);
 };

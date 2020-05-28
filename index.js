@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 
 // route setup
 app.get('/', (req, res) => {
-    res.send('Employees API is running');
+    res.send('API is running');
 });
 app.get('/api/employees', (req, res) => { 
     Employees.getEmployees((err, data) => {
