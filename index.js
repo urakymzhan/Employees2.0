@@ -5,7 +5,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 Employees = require('./models/employees');
 
-const uri = "mongodb+srv://seytech:Seytech2020@seytech-byvi5.mongodb.net/Seytech?retryWrites=true&w=majority"
+// REPLACE WITH YOUR URI !!!
+const uri = "mongodb+srv://<username>:<password>@test-byvi5.mongodb.net/test?retryWrites=true&w=majority"
 
 // mongoose setup
 mongoose.connect(uri, {
